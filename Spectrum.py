@@ -237,7 +237,7 @@ class MainWin(QMainWindow):
         self.hStatusLay.setContentsMargins(6, 0, 0, 0)
 
         self.statusLable = QLabel(self.statusBar)
-        self.statusLable.setText("بيئة تطوير لغة ألف 3 - نسخة 0.3.1")
+        self.statusLable.setText("بيئة تطوير لغة ألف 3 - نسخة 0.3.2")
         self.statusLable.setStyleSheet("color: rgb(190, 190, 190); font: 9pt Tajawal")
         self.statusLable.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
 
@@ -298,7 +298,11 @@ class MainWin(QMainWindow):
 
     def isSaved(self):
         if self.code.document().isModified() or self.fileName == None:
-            self.saveFile()
+            result = self.msgBox("حفظ", "عدم الحفظ", "هل تريد حفظ الملف؟", "حفظ الملف")
+            if result == 0:
+                self.saveFile()
+            elif result == 2:
+                return False
         return True
 
     def newFile(self):
@@ -419,6 +423,19 @@ class MainWin(QMainWindow):
     def setWinTitle(self):
         self.title.setText(self.fileName.split("/")[-1])
 
+            def msgBox(self, frstBtn, scndBtn, text, title):
+        msgBox = QMessageBox()
+        msgBox.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        msgBox.setStyleSheet("background-color:#1c1d20; font: 12pt Tajawal; color: #fff")
+        msgBox.addButton(frstBtn, QMessageBox.ButtonRole.YesRole)
+        msgBox.addButton(scndBtn, QMessageBox.ButtonRole.NoRole)
+        msgBox.addButton("إلغاء", QMessageBox.ButtonRole.RejectRole)
+        msgBox.setWindowTitle(title)
+        msgBox.setWindowIcon(QIcon("./Icons/TaifLogo.svg"))
+        msgBox.setText(text)
+        msgBox.exec()
+        return msgBox.result()
+    
 ################################################## دالة تشغيل التطبيق ##################################################
 
 if __name__ == "__main__":
