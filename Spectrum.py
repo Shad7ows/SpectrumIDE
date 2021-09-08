@@ -298,7 +298,7 @@ class MainWin(QMainWindow):
 
     def isSaved(self):
         if self.code.document().isModified() or self.fileName == None:
-            result = self.msgBox("حفظ", "عدم الحفظ", "هل تريد حفظ الملف؟", "حفظ الملف")
+            result = self.msgBox("حفظ الملف","هل تريد حفظ الملف؟", "حفظ", "عدم الحفظ", "إلغاء")
             if result == 0:
                 self.saveFile()
             elif result == 2:
@@ -423,13 +423,13 @@ class MainWin(QMainWindow):
     def setWinTitle(self):
         self.title.setText(self.fileName.split("/")[-1])
 
-            def msgBox(self, frstBtn, scndBtn, text, title):
+    def msgBox(self, title, text, frstBtn, scndBtn, thrdBtn):
         msgBox = QMessageBox()
         msgBox.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         msgBox.setStyleSheet("background-color:#1c1d20; font: 12pt Tajawal; color: #fff")
         msgBox.addButton(frstBtn, QMessageBox.ButtonRole.YesRole)
         msgBox.addButton(scndBtn, QMessageBox.ButtonRole.NoRole)
-        msgBox.addButton("إلغاء", QMessageBox.ButtonRole.RejectRole)
+        msgBox.addButton(thrdBtn, QMessageBox.ButtonRole.RejectRole)
         msgBox.setWindowTitle(title)
         msgBox.setWindowIcon(QIcon("./Icons/TaifLogo.svg"))
         msgBox.setText(text)
